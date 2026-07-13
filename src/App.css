@@ -1,0 +1,96 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.header {
+  background: no-repeat center url("./assets/worldmap.png") #0F182D;
+  height: 215px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  color: #FFF;
+}
+
+.title {
+  font-family: 'Big Shoulders', Verdana, sans-serif;
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #32CD32;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.logo {
+  height: 90px;
+}
+
+h2 {
+  text-align: center;
+}
+
+main {
+  margin: 30px auto;
+  max-width: 330px;
+  border: 4px #252F42 solid;
+  border-radius: 15px;
+  padding: 2em 1em;
+}
+
+.translation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-size: 1.25rem;
+}
+
+fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1em;
+}
+
+textarea {
+  background: #EFF0F4;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em;
+  font-weight: 500;
+}
+
+.input-label {
+  text-align: center;
+  color: #035A9D;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: #035A9D;
+  color: #FFF;
+  border: none;
+  padding: .625em 1.25em;
+  border-radius: 6px;
+  margin: 0.625em 0;
+}
+
+fieldset > .input-label {
+  margin-bottom: 24px;
+}
+
+fieldset > label {
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+input[type=radio] {
+  margin-right: 0.5em;
+}
