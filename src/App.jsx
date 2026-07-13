@@ -3,26 +3,28 @@ import Parrot from './assets/parrot.png'
 import { useState } from "react"
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false)
   const [translatedText, setTranslatedText] = useState("")
   const [submittedTranslation, setSubmittedTranslation] = useState("")
 
   async function handleSubmit(formData) {
     const data = Object.fromEntries(formData)
-    console.log(data)
     // API CALL HERE
-    setIsLoading(true)
-    setSubmittedTranslation(data["translation-input"])
+    setSubmittedTranslation(data['translation-input'])
     try {
-      const response = await fetch('')
+      const response = await fetch('/api/translate',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
       const res = await response.json()
-      setTranslatedText()
+      setTranslatedText(res.translatedText)
     } 
     catch (err) {
       console.error(err)
     }
     finally {
-      setIsLoading(false)
     }
   }
 
@@ -44,8 +46,7 @@ function App() {
         </div>
       </header>
       <main>
-        { isLoading ? <h2>Loading...</h2> :
-          translatedText === "" ?
+        { translatedText === "" ?
           <form className="translation-form" id="translation-form" action={handleSubmit}>
             <label className="input-label" htmlFor="translation-input">Text to translate 👇</label>
             <textarea id="translation-input" name="translation-input" rows="4" required={true} defaultValue="How are you?" />
