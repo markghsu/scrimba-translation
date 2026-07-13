@@ -61,6 +61,7 @@ textarea {
   border-radius: 8px;
   padding: 0.5em;
   font-weight: 500;
+  resize: none;
 }
 
 .input-label {
@@ -80,6 +81,7 @@ button {
   padding: .625em 1.25em;
   border-radius: 6px;
   margin: 0.625em 0;
+  cursor: pointer;
 }
 
 fieldset > .input-label {
@@ -89,6 +91,7 @@ fieldset > .input-label {
 fieldset > label {
   line-height: 1.5;
   font-weight: 600;
+  margin: 4px 0;
 }
 
 input[type=radio] {
