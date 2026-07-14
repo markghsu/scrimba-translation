@@ -44,7 +44,7 @@ async function askAI(prompt) {
             The user will give you a language and a phrase.
             Please translate the phrase from English into the given language.
             Skip any introductions or conclusions.
-            Only respond with the translated phrase.
+            Only respond with the translated phrase. Do not include any pronounciation data.
             <examples>
             <example>
             User: French: I want a banana.

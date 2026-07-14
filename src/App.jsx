@@ -1,35 +1,39 @@
 import './App.css'
 import Parrot from './assets/parrot.png'
-import { useState } from "react"
+import { useState, useActionState } from "react"
+import DOMPurify from "dompurify"
+
+async function getTranslation(prev, data) {
+  if (!data) return undefined
+  try {
+    const response = await fetch('/api/translate',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+    const res = await response.json()
+    return DOMPurify.sanitize(res.translatedText)
+  } 
+  catch (err) {
+    console.error(err)
+    alert("Error, server could not be reached. Please try again later.")
+  }
+}
 
 function App() {
-  const [translatedText, setTranslatedText] = useState("")
+  const [translatedText, dispatchTranslation, isPending] = useActionState(getTranslation, undefined)
   const [submittedTranslation, setSubmittedTranslation] = useState("")
 
   async function handleSubmit(formData) {
     const data = Object.fromEntries(formData)
-    // API CALL HERE
     setSubmittedTranslation(data['translation-input'])
-    try {
-      const response = await fetch('/api/translate',{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      const res = await response.json()
-      setTranslatedText(res.translatedText)
-    } 
-    catch (err) {
-      console.error(err)
-    }
-    finally {
-    }
+    dispatchTranslation(data)
   }
 
   function restart () {
-    setTranslatedText("")
+    dispatchTranslation(undefined)
     setSubmittedTranslation("")
   }
 
@@ -46,11 +50,11 @@ function App() {
         </div>
       </header>
       <main>
-        { translatedText === "" ?
+        { !translatedText ?
           <form className="translation-form" id="translation-form" action={handleSubmit}>
             <label className="input-label" htmlFor="translation-input">Text to translate 👇</label>
-            <textarea id="translation-input" name="translation-input" rows="4" required={true} defaultValue="How are you?" />
-            <fieldset id="language-radio">
+            <textarea disabled={ isPending } id="translation-input" name="translation-input" rows="4" required={true} defaultValue="How are you?" />
+            <fieldset disabled={ isPending } id="language-radio">
               <legend className="input-label">Select language 👇</legend>
               <label>
                   <input type="radio" name="language" value="french" required={true} />
@@ -65,7 +69,7 @@ function App() {
                   Japanese 🇯🇵
               </label>
             </fieldset>
-            <button className="submit-btn">Translate</button>
+            <button disabled={ isPending } className="submit-btn">{ isPending ? "Translating..." : "Translate" }</button>
           </form>
           :
           <div className="translation-form" id="result">
